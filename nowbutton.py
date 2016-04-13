@@ -91,6 +91,9 @@ class MainWindowExtension(WindowExtension):
 		i.backward_visible_cursor_positions(1);
 		textBuffer.place_cursor(i);
 
+		# and finally... scroll the window all the way to the bottom.
+		self.window.pageview.scroll_cursor_on_screen();
+
 	def _get_ui(self):
 		start_server_if_not_running()
 		notebook = self.notebookcombobox.get_notebook()
