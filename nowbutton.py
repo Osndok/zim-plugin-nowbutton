@@ -8,9 +8,19 @@
 # Skeleton and basic operation of this script was DERIVED from zim 'quicknote' and 'tasklist' plugins.
 #
 
+# If you tend to make log entries past midnight, this is the number of hours past midnight that
+# will be considered "the same day" (for purposes of selecting the journal page). To be most
+# effective, it should be the time that you are "most surely asleep". Small for early risers, larger
+# for night-owls. For example, a value of '4' would imply that the new day/page starts at '4am'.
+hours_past_midnight=4
+
+# ----------------------
+
 from time import strftime
 import gtk
 
+
+from datetime import datetime, timedelta
 from datetime import date as dateclass
 
 # TODO: kern out unneccesary imports
@@ -65,7 +75,10 @@ class MainWindowExtension(WindowExtension):
 
 	@action(_('Log Entry'), stock=gtk.STOCK_JUMP_TO, readonly=True) # T: menu item
 	def now_button_clicked(self):
-		name=strftime(':Journal:%Y:%m:%d');
+
+		offset_time=datetime.today()-timedelta(hours=hours_past_midnight)
+		name=offset_time.strftime(':Journal:%Y:%m:%d');
+
 		text=strftime('%n%I:%M%P - ');
 
 		#ui = self.__get_ui()
