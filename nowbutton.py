@@ -60,6 +60,13 @@ class MainWindowExtension(WindowExtension):
 
 	uimanager_xml = '''
 		<ui>
+			<menubar name='menubar'>
+				<menu action='tools_menu'>
+					<placeholder name='plugin_items'>
+						<menuitem action='now_button_clicked'/>
+					</placeholder>
+				</menu>
+			</menubar>
 			<toolbar name='toolbar'>
 				<placeholder name='tools'>
 					<toolitem action='now_button_clicked'/>
@@ -73,7 +80,12 @@ class MainWindowExtension(WindowExtension):
 		#self.notebookcombobox = NotebookComboBox(current='file:///home/robert/Notebooks/Primary')
 		#self.notebookcombobox.connect('changed', self.on_notebook_changed)
 
-	@action(_('Log Entry'), stock=gtk.STOCK_JUMP_TO, readonly=True) # T: menu item
+	@action(
+		_('Log Entry'),
+		stock=gtk.STOCK_JUMP_TO,
+		readonly=True,
+		accelerator = '<Control><Shift>E'
+	) # T: menu item
 	def now_button_clicked(self):
 
 		offset_time=datetime.today()-timedelta(hours=hours_past_midnight)
