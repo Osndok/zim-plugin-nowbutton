@@ -91,7 +91,7 @@ class MainWindowExtension(WindowExtension):
 		offset_time=datetime.today()-timedelta(hours=hours_past_midnight)
 		name=offset_time.strftime(':Journal:%Y:%m:%d');
 
-		text=strftime('%n%I:%M%P - ');
+		text = '\n' + strftime('%I:%M%p - ').lower();
 
 		#ui = self.__get_ui()
 		#ui = ServerProxy().get_notebook(notebookFileUri)
