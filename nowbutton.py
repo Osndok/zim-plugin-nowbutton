@@ -25,18 +25,7 @@ from datetime import date as dateclass
 
 # TODO: kern out unneccesary imports
 from zim.plugins import PluginClass, WindowExtension, extends
-from zim.command import Command
 from zim.actions import action
-from zim.config import data_file, ConfigManager
-from zim.notebook import Notebook, PageNameError, NotebookInfo, \
-	resolve_notebook, build_notebook
-from zim.ipc import start_server_if_not_running, ServerProxy
-from zim.gui.widgets import Dialog, ScrolledTextView, IconButton, \
-	InputForm, gtk_window_set_default_icon, QuestionDialog
-from zim.gui.clipboard import Clipboard, SelectionClipboard
-from zim.gui.notebookdialog import NotebookComboBox
-from zim.templates import get_template
-
 
 import logging
 
@@ -77,8 +66,6 @@ class MainWindowExtension(WindowExtension):
 
 	def __init__(self, plugin, window):
 		WindowExtension.__init__(self, plugin, window)
-		#self.notebookcombobox = NotebookComboBox(current='file:///home/robert/Notebooks/Primary')
-		#self.notebookcombobox.connect('changed', self.on_notebook_changed)
 
 	@action(
 		_('Log Entry'),
@@ -93,11 +80,14 @@ class MainWindowExtension(WindowExtension):
 
 		text = '\n' + strftime('%I:%M%p - ').lower();
 
-		#ui = self.__get_ui()
-		#ui = ServerProxy().get_notebook(notebookFileUri)
-		#ui = self.window.ui.notebook;
 		ui = self.window.ui
-		path=ui.notebook.resolve_path(name);
+		try:
+			#v0.65
+			path=ui.notebook.resolve_path(name);
+		except AttributeError:
+			#v0.66
+			path=ui.notebook.pages.lookup_from_user_input(name);
+
 		page=ui.notebook.get_page(path);
 
 		#ui.append_text_to_page(path, text)
@@ -118,14 +108,6 @@ class MainWindowExtension(WindowExtension):
 
 		# and finally... scroll the window all the way to the bottom.
 		self.window.pageview.scroll_cursor_on_screen();
-
-	def _get_ui(self):
-		start_server_if_not_running()
-		notebook = self.notebookcombobox.get_notebook()
-		if notebook:
-			return ServerProxy().get_notebook(notebook)
-		else:
-			return None
 
 	def on_notebook_changed(self):
 		return None
