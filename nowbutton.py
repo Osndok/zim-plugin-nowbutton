@@ -12,7 +12,6 @@
 # will be considered "the same day" (for purposes of selecting the journal page). To be most
 # effective, it should be the time that you are "most surely asleep". Small for early risers, larger
 # for night-owls. For example, a value of '4' would imply that the new day/page starts at '4am'.
-hours_past_midnight=4
 
 # ----------------------
 
@@ -43,6 +42,10 @@ buttons.
 		'author': 'Robert Hailey',
 		'help': 'Plugins:NowButton',
 	}
+	plugin_preferences = (
+		('hours_past_midnight', 'int', _('Hours past Midnight'), 4, (0, 12)),
+	)
+
 
 @extends('MainWindow')
 class MainWindowExtension(WindowExtension):
@@ -75,7 +78,7 @@ class MainWindowExtension(WindowExtension):
 	) # T: menu item
 	def now_button_clicked(self):
 
-		offset_time=datetime.today()-timedelta(hours=hours_past_midnight)
+		offset_time=datetime.today()-timedelta(hours=self.plugin.preferences['hours_past_midnight'])
 		name=offset_time.strftime(':Journal:%Y:%m:%d');
 
 		text = '\n' + strftime('%I:%M%p - ').lower();
