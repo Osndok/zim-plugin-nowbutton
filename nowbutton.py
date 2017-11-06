@@ -1,20 +1,12 @@
 #!/usr/bin/python
 #
 # nowbutton.py
-# 
+#
 # A Zim plugin that jumps to today's journal entry, and appends the current *time* to the end of the file.
 # This makes it nearly trivial to keep a log with tighter-than-one-day granularity.
 #
 # Skeleton and basic operation of this script was DERIVED from zim 'quicknote' and 'tasklist' plugins.
 #
-
-# If you tend to make log entries past midnight, this is the number of hours past midnight that
-# will be considered "the same day" (for purposes of selecting the journal page). To be most
-# effective, it should be the time that you are "most surely asleep". Small for early risers, larger
-# for night-owls. For example, a value of '4' would imply that the new day/page starts at '4am'.
-
-# ----------------------
-
 from time import strftime
 import gtk
 
@@ -98,7 +90,7 @@ class MainWindowExtension(WindowExtension):
 		if not page.exists():
 			parsetree = ui.notebook.get_template(page)
 			page.set_parsetree(parsetree)
-		
+
 		page.parse('wiki', text, append=True) # FIXME format hard coded ??? (this FIXME was copied from gui.__init__)
 		ui.present(path)
 		ui.notebook.store_page(page);
@@ -114,6 +106,6 @@ class MainWindowExtension(WindowExtension):
 
 	def on_notebook_changed(self):
 		return None
-		
+
 
 
