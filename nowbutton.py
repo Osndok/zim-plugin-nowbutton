@@ -70,8 +70,12 @@ class MainWindowExtension(WindowExtension):
 	) # T: menu item
 	def now_button_clicked(self):
 
+		calendar_config=self.plugin.config.get_config_dict('<profile>/preferences.conf')['CalendarPlugin'];
+		calendar_namespace=calendar_config['namespace'];
+
 		offset_time=datetime.today()-timedelta(hours=self.plugin.preferences['hours_past_midnight'])
-		name=offset_time.strftime(':Journal:%Y:%m:%d');
+
+		name=str(calendar_namespace.child(offset_time.strftime('%Y:%m:%d')));
 
 		text = '\n' + strftime('%I:%M%p - ').lower();
 
