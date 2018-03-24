@@ -14,6 +14,7 @@ import gtk
 
 from datetime import datetime, timedelta
 from datetime import date as dateclass
+from zim.config import StringAllowEmpty
 
 # TODO: kern out unneccesary imports
 from zim.plugins import PluginClass, WindowExtension, extends
@@ -37,6 +38,7 @@ buttons.
 	}
 	plugin_preferences = (
 		('hours_past_midnight', 'int', _('Hours past Midnight'), 4, (0, 12)),
+		('timestamp_format', 'string', _('Timestamp format'), '%I:%M%p -', StringAllowEmpty),
 	)
 
 
@@ -78,7 +80,7 @@ class MainWindowExtension(WindowExtension):
 
 		name=str(calendar_namespace.child(offset_time.strftime('%Y:%m:%d')));
 
-		text = '\n' + strftime('%I:%M%p - ').lower();
+		text = '\n' + strftime(self.plugin.preferences['timestamp_format'+' ']).lower();
 
 		ui = self.window.ui
 		try:
