@@ -80,7 +80,7 @@ class MainWindowExtension(WindowExtension):
 
 		name=str(calendar_namespace.child(offset_time.strftime('%Y:%m:%d')));
 
-		text = '\n' + strftime(self.plugin.preferences['timestamp_format'+' ']).lower();
+		text = '\n%s ' % strftime(self.plugin.preferences['timestamp_format']).lower();
 
 		ui = self.window.ui
 		try:
