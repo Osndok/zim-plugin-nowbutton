@@ -78,7 +78,7 @@ class MainWindowExtension(WindowExtension):
 
 		offset_time=datetime.today()-timedelta(hours=self.plugin.preferences['hours_past_midnight'])
 
-		name=str(calendar_namespace.child(offset_time.strftime('%Y:%m:%d')));
+		name=calendar_namespace.child(offset_time.strftime('%Y:%m:%d')).name;
 
 		text = '\n%s ' % strftime(self.plugin.preferences['timestamp_format']).lower();
 
